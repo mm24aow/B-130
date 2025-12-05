@@ -4,5 +4,6 @@
 # nba_2017_twitter_players.csv
 # Sections:
 # 1. Load dataset
-data <- read.csv("/Users/saim/Desktop/B-130/B-130/nba_2017_twitter_players.csv")
+data <- read.csv("nba_2017_twitter_players.csv")
 head(data)
+
