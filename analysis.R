@@ -5,12 +5,8 @@
 # Authors: [Your Names/Team]
 # Date: [Date]
 
-# =============================================================================
-# SECTION 1: LOAD AND EXPLORE DATASET
-# =============================================================================
-
 # Load the dataset from CSV file into a data frame
-data <- read.csv("nba_2017_twitter_players.csv")
+data <- read.csv("/Users/saim/Desktop/B-130/B-130/nba_2017_twitter_players.csv")
 
 # Display first 6 rows to understand data structure
 head(data)
@@ -22,13 +18,7 @@ str(data)
 # Shows min, max, mean, median, and quartiles for numeric columns
 summary(data)
 
-# =============================================================================
-# SECTION 2: DATA PREPARATION
-# =============================================================================
-
 # Extract Twitter engagement metrics for analysis
-# x: Number of favorites/likes received
-# y: Number of retweets received
 x <- data$TWITTER_FAVORITE_COUNT
 y <- data$TWITTER_RETWEET_COUNT
 
@@ -36,14 +26,10 @@ y <- data$TWITTER_RETWEET_COUNT
 cat("Missing values in Favorite Count:", sum(is.na(x)), "\n")
 cat("Missing values in Retweet Count:", sum(is.na(y)), "\n")
 
-# Optional: Remove rows with missing values if needed
-# complete_cases <- complete.cases(x, y)
-# x <- x[complete_cases]
-# y <- y[complete_cases]
+complete_cases <- complete.cases(x, y)
+x <- x[complete_cases]
+y <- y[complete_cases]
 
-# =============================================================================
-# SECTION 3: VISUALIZATION - SCATTER PLOT
-# =============================================================================
 
 # Create scatter plot to explore relationship between favorites and retweets
 plot(x, y,
@@ -71,10 +57,6 @@ text(x = max(x, na.rm = TRUE) * 0.7,
      labels = paste("r =", round(correlation, 3)),
      col = "darkred",
      cex = 1.1)
-
-# =============================================================================
-# SECTION 4: VISUALIZATION - HISTOGRAM
-# =============================================================================
 
 # Create histogram to show distribution of Twitter favorite counts
 hist(x,
@@ -108,10 +90,6 @@ legend("topright",
        lwd = 2,
        cex = 0.8)
 
-# =============================================================================
-# SECTION 5: ADDITIONAL ANALYSIS (Optional Enhancements)
-# =============================================================================
-
 # Calculate basic statistics
 cat("\n=== TWITTER ENGAGEMENT STATISTICS ===\n")
 cat("Favorite Count - Mean:", mean(x, na.rm = TRUE), "\n")
@@ -127,21 +105,14 @@ boxplot(x, main = "Favorite Count", col = "lightblue", ylab = "Count")
 boxplot(y, main = "Retweet Count", col = "lightgreen", ylab = "Count")
 par(mfrow = c(1, 1))  # Reset to single plot
 
-# Optional: Save plots to files
-# png("twitter_analysis_plots.png", width = 1000, height = 500)
-# par(mfrow = c(1, 2))
-# # Plot 1: Scatter plot
-# plot(x, y, main = "Favorites vs Retweets", xlab = "Favorites", ylab = "Retweets")
-# # Plot 2: Histogram
-# hist(x, main = "Distribution of Favorites", xlab = "Favorite Count")
-# dev.off()
-
-# =============================================================================
-# SECTION 6: CLEANUP AND SESSION INFO
-# =============================================================================
-
-# Remove temporary variables if desired
-# rm(x, y, correlation)
+#Optional: Save plots to files
+png("twitter_analysis_plots.png", width = 1000, height = 500)
+par(mfrow = c(1, 2))
+# Plot 1: Scatter plot
+plot(x, y, main = "Favorites vs Retweets", xlab = "Favorites", ylab = "Retweets")
+# Plot 2: Histogram
+hist(x, main = "Distribution of Favorites", xlab = "Favorite Count")
+dev.off()
 
 # Display session information for reproducibility
 cat("\n=== SESSION INFO ===\n")
