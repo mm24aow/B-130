@@ -87,34 +87,50 @@ legend("topright",
        lty = 2, 
        lwd = 2,
        cex = 0.8)
-
-# Calculate basic statistics
+# === TWITTER ENGAGEMENT STATISTICS ===
 cat("\n=== TWITTER ENGAGEMENT STATISTICS ===\n")
-cat("Favorite Count - Mean:", mean(x, na.rm = TRUE), "\n")
-cat("Favorite Count - Median:", median(x, na.rm = TRUE), "\n")
-cat("Favorite Count - SD:", sd(x, na.rm = TRUE), "\n")
-cat("Retweet Count - Mean:", mean(y, na.rm = TRUE), "\n")
-cat("Retweet Count - Median:", median(y, na.rm = TRUE), "\n")
-cat("Correlation (Favorites vs Retweets):", correlation, "\n")
+cat("Favorite Count - Mean: ", mean(x, na.rm = TRUE), "\n")
+cat("Favorite Count - Median: ", median(x, na.rm = TRUE), "\n")
+cat("Favorite Count - SD: ", sd(x, na.rm = TRUE), "\n")
+cat("Retweet Count - Mean: ", mean(y, na.rm = TRUE), "\n")
+cat("Retweet Count - Median: ", median(y, na.rm = TRUE), "\n")
+cat("Correlation (Favorites vs Retweets): ", correlation, "\n")
 
-# Optional: Boxplot to identify outliers
-par(mfrow = c(1, 2))  # Set up 1x2 plotting area
-boxplot(x, main = "Favorite Count", col = "lightblue", ylab = "Count")
-boxplot(y, main = "Retweet Count", col = "lightgreen", ylab = "Count")
-par(mfrow = c(1, 1))  # Reset to single plot
+# --- Optional Outlier Visualization ---
+par(mfrow = c(1, 2))  # Split plotting area into two panels
 
+boxplot(x,
+        main = "Favorite Count",
+        col = "lightblue",
+        ylab = "Count")
+
+boxplot(y,
+        main = "Retweet Count",
+        col = "lightgreen",
+        ylab = "Count")
+
+par(mfrow = c(1, 1))  # Reset plotting layout
+
+# --- Save Plots to File ---
 png("twitter_analysis_plots.png", width = 1000, height = 500)
 par(mfrow = c(1, 2))
-# Plot 1: Scatter plot
-plot(x, y, main = "Favorites vs Retweets", xlab = "Favorites", ylab = "Retweets")
-# Plot 2: Histogram
-hist(x, main = "Distribution of Favorites", xlab = "Favorite Count")
-# Pearson correlation test
-cor_test <- cor.test(x, y, method = "pearson")
 
-# Print the results
+# Scatter plot
+plot(x, y,
+     main = "Favorites vs Retweets",
+     xlab = "Favorites",
+     ylab = "Retweets")
+
+# Histogram of favorites
+hist(x,
+     main = "Distribution of Favorites",
+     xlab = "Favorite Count")
+
+# --- Correlation Test ---
+cor_test <- cor.test(x, y, method = "pearson")
 print(cor_test)
-cat("\nCorrelation coefficient (r):", cor_test$estimate, "\n")
-cat("p-value:", cor_test$p.value, "\n")
+
+cat("\nCorrelation coefficient (r): ", cor_test$estimate, "\n")
+cat("p-value: ", cor_test$p.value, "\n")
 
 dev.off()
