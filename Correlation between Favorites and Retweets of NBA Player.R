@@ -4,7 +4,6 @@ data <- read.csv("nba_2017_twitter_players.csv")
 #checking the columns
 head(data)
 
-#column names
 names(data)
 
 #renaming the columns
@@ -27,14 +26,24 @@ plot(
 model <- lm(retweets ~ favorites, data = data)
 abline(model, col = "red")
 
-# Bar plot of favorites for each player (original order)
+# Bar plot of favorites for each player
 barplot(
   data$favorites,
   names.arg = data$player,
   las = 2,
   col = "lightblue",
   cex.names = 0.6,         # shrink label size
-  main = "Bar Plot of Favorites (Original Data)",
+  main = "Bar Plot of Favorites",
+  ylab = "Favorite Count"
+)
+# Bar plot of retweets for each player
+barplot(
+  data$retweets,
+  names.arg = data$player,
+  las = 2,
+  col = "lightblue",
+  cex.names = 0.6,         # shrink label size
+  main = "Bar Plot of Favorites",
   ylab = "Favorite Count"
 )
 
